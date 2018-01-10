@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -78,9 +79,18 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
             holder.director.setVisibility(View.GONE);
         }
 
-        // Set the summary
         if (result.getReviews().size() > 0) {
+            // Set the summary
             holder.summary.setText(result.getReviews().get(0).getSummary());
+
+            // Set the thumbnail
+            // TODO glide/picasso
+
+            // Set the headline
+            holder.headline.setText(result.getReviews().get(0).getHeadline());
+
+            // Set the byline
+            holder.byline.setText(result.getReviews().get(0).getByline());
         }
     }
 
@@ -96,6 +106,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         private TextView genres;
         private TextView director;
         private TextView summary;
+        private ImageView thumbnail;
+        private TextView headline;
+        private TextView byline;
 
         ViewHolder(View view) {
             super(view);
@@ -105,6 +118,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
             genres = view.findViewById(R.id.genres);
             director = view.findViewById(R.id.director);
             summary = view.findViewById(R.id.summary);
+            thumbnail = view.findViewById(R.id.thumbnail);
+            headline = view.findViewById(R.id.headline);
+            byline = view.findViewById(R.id.byline);
         }
     }
 }
