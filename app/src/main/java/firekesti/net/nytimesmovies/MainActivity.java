@@ -1,7 +1,6 @@
 package firekesti.net.nytimesmovies;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,15 +8,16 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import java.util.List;
 
 import firekesti.net.nytimesmovies.network.NytMovieClient;
 import firekesti.net.nytimesmovies.network.models.Result;
 import firekesti.net.nytimesmovies.view.MoviesAdapter;
+import retrofit2.Call;
 
 public class MainActivity extends AppCompatActivity implements NytMovieClient.ResultsListener {
+    private Call call;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,16 +27,16 @@ public class MainActivity extends AppCompatActivity implements NytMovieClient.Re
         setSupportActionBar(toolbar);
 
         // TODO user input for query
-        NytMovieClient.getMovies("big", MainActivity.this);
+        call = NytMovieClient.getMovies("big", MainActivity.this);
+    }
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                // TODO user input for query
-                NytMovieClient.getMovies("big", MainActivity.this);
-            }
-        });
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Make sure not to leak the Activity over a long network call
+        if (call != null && !call.isCanceled()) {
+            call.cancel();
+        }
     }
 
     @Override

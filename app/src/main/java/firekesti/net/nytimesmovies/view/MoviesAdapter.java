@@ -15,9 +15,8 @@ import firekesti.net.nytimesmovies.StringUtils;
 import firekesti.net.nytimesmovies.network.models.Result;
 
 /**
- * Created by kkelly on 1/9/18.
+ * Adapter for the results of the movies API call
  */
-
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
     private List<Result> results;
 
