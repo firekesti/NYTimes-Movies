@@ -43,15 +43,16 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:contentDescription="@null"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="@id/byline"
         app:layout_constraintDimensionRatio="h,3:2"
         app:layout_constraintTop_toBottomOf="@id/title"
-        tools:src="@color/bright_yellow"/>
+        tools:src="@drawable/movie_placeholder"/>
 
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/black_50"
+        android:background="@color/black_40"
         app:layout_constraintBottom_toBottomOf="@id/thumbnail"
         app:layout_constraintEnd_toEndOf="@id/thumbnail"
         app:layout_constraintStart_toStartOf="@id/thumbnail"

@@ -1,6 +1,8 @@
 package firekesti.net.nytimesmovies.view;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -9,11 +11,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import firekesti.net.nytimesmovies.R;
 import firekesti.net.nytimesmovies.StringUtils;
 import firekesti.net.nytimesmovies.network.models.Result;
+import firekesti.net.nytimesmovies.network.models.Review;
 
 /**
  * Adapter for the results of the movies API call
@@ -32,7 +37,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Context context = holder.title.getContext();
         String divider = context.getString(R.string.text_divider);
         Result result = results.get(position);
@@ -80,17 +85,25 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         }
 
         if (result.getReviews().size() > 0) {
+            final Review review = result.getReviews().get(0);
             // Set the summary
-            holder.summary.setText(result.getReviews().get(0).getSummary());
+            holder.summary.setText(review.getSummary());
 
             // Set the thumbnail
-            // TODO glide/picasso
+            if (!TextUtils.isEmpty(review.getImageMediumThreeByTwo())) {
+                Picasso.with(context)
+                        .load("http://www.nytimes.com/" + review.getImageMediumThreeByTwo())
+                        .into(holder.thumbnail);
+            } else {
+                // If empty, we want a placeholder image
+                holder.thumbnail.setImageResource(R.drawable.movie_placeholder);
+            }
 
             // Set the headline
-            holder.headline.setText(result.getReviews().get(0).getHeadline());
+            holder.headline.setText(review.getHeadline());
 
             // Set the byline
-            holder.byline.setText(result.getReviews().get(0).getByline());
+            holder.byline.setText(review.getByline());
         }
     }
 
