@@ -20,9 +20,11 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // UI
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta4'
     implementation 'com.android.support:design:26.1.0'
+    implementation 'de.psdev.licensesdialog:licensesdialog:1.8.3'
     // Network
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-moshi:2.3.0'

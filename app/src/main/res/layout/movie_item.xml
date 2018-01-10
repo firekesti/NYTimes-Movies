@@ -12,7 +12,7 @@
         android:id="@+id/critic_pick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:background="@color/bright_yellow"
         android:fontFamily="sans-serif-smallcaps"
         android:includeFontPadding="false"
         android:paddingBottom="4dp"

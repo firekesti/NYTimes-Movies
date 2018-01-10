@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import java.util.List;
 
+import de.psdev.licensesdialog.LicensesDialog;
 import firekesti.net.nytimesmovies.network.NytMovieClient;
 import firekesti.net.nytimesmovies.network.models.Result;
 import firekesti.net.nytimesmovies.view.MoviesAdapter;
@@ -60,7 +61,10 @@ public class MainActivity extends AppCompatActivity implements NytMovieClient.Re
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_about) {
-            // TODO launch a dialog with licenses!
+            new LicensesDialog.Builder(this)
+                    .setNotices(R.raw.licenses)
+                    .build()
+                    .show();
             return true;
         }
         return super.onOptionsItemSelected(item);
