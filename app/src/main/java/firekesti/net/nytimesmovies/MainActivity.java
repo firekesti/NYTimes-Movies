@@ -9,6 +9,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import retrofit2.Call;
 public class MainActivity extends AppCompatActivity implements NytMovieClient.ResultsListener {
     private Call call;
     private RecyclerView moviesList;
+    private View loadingSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements NytMovieClient.Re
         setSupportActionBar(toolbar);
         moviesList = findViewById(R.id.movies_list);
         moviesList.setLayoutManager(new LinearLayoutManager(this));
+        loadingSpinner = findViewById(R.id.loading_spinner);
     }
 
     @Override
@@ -40,11 +43,13 @@ public class MainActivity extends AppCompatActivity implements NytMovieClient.Re
 
     @Override
     public void onResults(List<Result> results) {
+        loadingSpinner.setVisibility(View.GONE);
         moviesList.setAdapter(new MoviesAdapter(results));
     }
 
     @Override
     public void onFailure() {
+        loadingSpinner.setVisibility(View.GONE);
         Snackbar.make(findViewById(android.R.id.content), "There was an error getting movies", Snackbar.LENGTH_SHORT).show();
     }
 
@@ -58,8 +63,7 @@ public class MainActivity extends AppCompatActivity implements NytMovieClient.Re
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                cancelCall();
-                call = NytMovieClient.getMovies(query, MainActivity.this);
+                makeCall(query);
                 return false;
             }
 
@@ -81,6 +85,12 @@ public class MainActivity extends AppCompatActivity implements NytMovieClient.Re
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void makeCall(String query) {
+        cancelCall();
+        loadingSpinner.setVisibility(View.VISIBLE);
+        call = NytMovieClient.getMovies(query, MainActivity.this);
     }
 
     private void cancelCall() {
