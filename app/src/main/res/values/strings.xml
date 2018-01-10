@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">NYTimesMovies</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_about">About</string>
     <string name="critics_pick_lowercase_for_caps">nyt critic\'s pick</string>
     <string name="text_divider">"  |  "</string>
     <string name="directed_by" formatted="false">Directed by %s</string>
