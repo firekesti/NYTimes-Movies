@@ -7,4 +7,6 @@
     <string name="desc_nyt_data">Data provided by The New York Times</string>
     <string name="search">Search</string>
     <string name="search_movie_reviews">Search movie reviews</string>
+    <string name="add_to_list">Add to\nMy List</string>
+    <string name="remove_from_list">Remove from\nMy List</string>
 </resources>

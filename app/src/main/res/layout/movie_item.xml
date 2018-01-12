@@ -89,6 +89,21 @@
         tools:text="A. O. SCOTT"/>
 
     <TextView
+        android:id="@+id/my_list_toggle"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:clickable="true"
+        android:drawableTop="@drawable/add_icon"
+        android:text="@string/add_to_list"
+        android:focusable="true"
+        android:gravity="center"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/thumbnail"
+        app:layout_constraintStart_toEndOf="@id/thumbnail"
+        app:layout_constraintTop_toTopOf="@id/thumbnail"/>
+
+    <TextView
         android:id="@+id/year_rating_runtime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
