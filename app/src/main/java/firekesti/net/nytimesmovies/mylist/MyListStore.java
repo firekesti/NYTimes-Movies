@@ -1,5 +1,6 @@
 package firekesti.net.nytimesmovies.mylist;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
@@ -52,7 +53,7 @@ public class MyListStore {
         db.movieDao().remove(db.movieDao().findById(id));
     }
 
-    List<Movie> getMyList() {
+    LiveData<List<Movie>> getMyList() {
         return db.movieDao().getAll();
     }
 }

@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import firekesti.net.nytimesmovies.R;
@@ -18,8 +17,8 @@ import firekesti.net.nytimesmovies.database.Movie;
 public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder> {
     private List<Movie> movies;
 
-    MyListAdapter() {
-        movies = MyListStore.getInstance().getMyList();
+    MyListAdapter(List<Movie> movies) {
+        this.movies = movies;
     }
 
     @Override
