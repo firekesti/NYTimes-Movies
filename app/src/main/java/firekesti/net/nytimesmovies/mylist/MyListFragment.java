@@ -25,11 +25,9 @@ public class MyListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.my_list, container, false);
-
         RecyclerView myList = view.findViewById(R.id.my_list);
         myList.setLayoutManager(new LinearLayoutManager(container.getContext()));
         myList.setAdapter(new MyListAdapter());
-
         return view;
     }
 }

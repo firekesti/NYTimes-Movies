@@ -15,9 +15,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import firekesti.net.nytimesmovies.mylist.MyListStore;
 import firekesti.net.nytimesmovies.R;
 import firekesti.net.nytimesmovies.StringUtils;
+import firekesti.net.nytimesmovies.mylist.MyListStore;
 import firekesti.net.nytimesmovies.network.models.Result;
 import firekesti.net.nytimesmovies.network.models.Review;
 
@@ -51,8 +51,7 @@ class MovieViewHolder extends RecyclerView.ViewHolder {
     }
 
     void bind(final Result result) {
-        Context context = title.getContext();
-        String divider = context.getString(R.string.text_divider);
+        final Context context = title.getContext();
 
         // Show or hide the Critic's Pick badge
         criticPick.setVisibility(result.getCriticsPick() == 1 ? View.VISIBLE : View.GONE);
@@ -60,23 +59,12 @@ class MovieViewHolder extends RecyclerView.ViewHolder {
         // Set the title
         title.setText(result.getTitle());
 
-        // Set the year, rating, and runtime, like "2017  |  R  |  1h 23m"
-        // Likewise, handle gracefully if one or more values are missing
-        StringBuilder sb = new StringBuilder();
-        if (result.getYear() != null) {
-            sb.append(String.valueOf(result.getYear())).append(divider);
-        }
-        if (!TextUtils.isEmpty(result.getRating())) {
-            sb.append(result.getRating()).append(divider);
-        }
-        if (result.getRuntimeUs() != null) {
-            sb.append(StringUtils.getHourMinuteFromMinutes(result.getRuntimeUs()));
-        }
-        yearRatingRuntime.setVisibility(sb.length() > 0 ? View.VISIBLE : View.GONE);
-        yearRatingRuntime.setText(sb.toString());
+        String yearRatingRuntimeText = StringUtils.getYearRatingRuntime(result, context);
+        yearRatingRuntime.setVisibility(yearRatingRuntimeText.length() > 0 ? View.VISIBLE : View.GONE);
+        yearRatingRuntime.setText(yearRatingRuntimeText);
 
         // Set the genres list, adding commas to each except the last
-        sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         List<String> genreList = result.getGenres();
         for (int i = 0; i < genreList.size(); i++) {
             String genre = genreList.get(i);
@@ -142,7 +130,7 @@ class MovieViewHolder extends RecyclerView.ViewHolder {
                 if (isInMyList) {
                     MyListStore.getInstance().removeFromMyList(result.getImdb());
                 } else {
-                    MyListStore.getInstance().addToMyList(result.getImdb(), result.getTitle());
+                    MyListStore.getInstance().addToMyList(result, context);
                 }
                 isInMyList = !isInMyList;
                 myListToggle.setText(isInMyList ? R.string.remove_from_list : R.string.add_to_list);

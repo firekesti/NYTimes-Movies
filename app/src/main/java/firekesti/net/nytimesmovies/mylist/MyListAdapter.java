@@ -10,15 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import firekesti.net.nytimesmovies.R;
+import firekesti.net.nytimesmovies.database.Movie;
 
 /**
  * An adapter for a My List view
  */
 public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder> {
-    private List<String> ids = new ArrayList<>();
+    private List<Movie> movies;
 
     MyListAdapter() {
-        ids.addAll(MyListStore.getInstance().getAllIds());
+        movies = MyListStore.getInstance().getMyList();
     }
 
     @Override
@@ -29,12 +30,12 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final MyListAdapter.ViewHolder holder, int position) {
-        holder.bind(ids.get(position));
+        holder.bind(movies.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return ids.size();
+        return movies.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -46,8 +47,8 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
         }
 
 
-        void bind(String id) {
-            title.setText(MyListStore.getInstance().getTitleForId(id));
+        void bind(Movie movie) {
+            title.setText(movie.getTitle());
         }
     }
 }

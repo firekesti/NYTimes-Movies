@@ -1,28 +1,30 @@
 package firekesti.net.nytimesmovies.mylist;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
-import android.content.SharedPreferences;
 
-import java.util.Set;
+import java.util.List;
+
+import firekesti.net.nytimesmovies.StringUtils;
+import firekesti.net.nytimesmovies.database.Movie;
+import firekesti.net.nytimesmovies.database.MyListDatabase;
+import firekesti.net.nytimesmovies.network.models.Result;
 
 /**
  * A store using SharedPreferences to save a list of movie IDs for the user
  */
 public class MyListStore {
-    // Name of the file where we store all preferences
-    private static final String FILE_NAME = "mylist";
-    private static final String FILE_NAME_TITLES = "mylist.titles";
-
     // Singleton instance of this class
     private static MyListStore instance;
 
-    // Shared preferences instance
-    private final SharedPreferences ids;
-    private final SharedPreferences titles;
+    // The Database for my list
+    private MyListDatabase db;
 
     private MyListStore(Context context) {
-        ids = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
-        titles = context.getSharedPreferences(FILE_NAME_TITLES, Context.MODE_PRIVATE);
+        db = Room.databaseBuilder(context.getApplicationContext(), MyListDatabase.class, "my-list")
+                // TODO temp
+                .allowMainThreadQueries()
+                .build();
     }
 
     public static void init(Context context) {
@@ -34,24 +36,23 @@ public class MyListStore {
     }
 
     public boolean isItemInMyList(String id) {
-        return ids.getBoolean(id, false);
+        Movie movie = db.movieDao().findById(id);
+        return movie != null;
     }
 
-    public void addToMyList(String id, String title) {
-        ids.edit().putBoolean(id, true).apply();
-        titles.edit().putString(id, title).apply();
+    public void addToMyList(Result result, Context context) {
+        Movie movie = new Movie();
+        movie.setId(result.getImdb());
+        movie.setTitle(result.getTitle());
+        movie.setYearRatingRuntime(StringUtils.getYearRatingRuntime(result, context));
+        db.movieDao().add(movie);
     }
 
     public void removeFromMyList(String id) {
-        ids.edit().remove(id).apply();
-        titles.edit().remove(id).apply();
+        db.movieDao().remove(db.movieDao().findById(id));
     }
 
-    Set<String> getAllIds() {
-        return ids.getAll().keySet();
-    }
-
-    String getTitleForId(String id) {
-        return titles.getString(id, null);
+    List<Movie> getMyList() {
+        return db.movieDao().getAll();
     }
 }

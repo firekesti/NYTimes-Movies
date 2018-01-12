@@ -1,6 +1,11 @@
 package firekesti.net.nytimesmovies;
 
+import android.content.Context;
+import android.text.TextUtils;
+
 import java.util.Locale;
+
+import firekesti.net.nytimesmovies.network.models.Result;
 
 /**
  * A Utils class to manipulate strings
@@ -32,5 +37,22 @@ public final class StringUtils {
         } else {
             return String.format(Locale.US, SHORT_WORDY_TIME_FORMAT, minutes);
         }
+    }
+
+    public static String getYearRatingRuntime(Result result, Context context) {
+        String divider = context.getString(R.string.text_divider);
+        // Set the year, rating, and runtime, like "2017  |  R  |  1h 23m"
+        // Likewise, handle gracefully if one or more values are missing
+        StringBuilder sb = new StringBuilder();
+        if (result.getYear() != null) {
+            sb.append(String.valueOf(result.getYear())).append(divider);
+        }
+        if (!TextUtils.isEmpty(result.getRating())) {
+            sb.append(result.getRating()).append(divider);
+        }
+        if (result.getRuntimeUs() != null) {
+            sb.append(StringUtils.getHourMinuteFromMinutes(result.getRuntimeUs()));
+        }
+        return sb.toString();
     }
 }
