@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import firekesti.net.nytimesmovies.MyListStore;
 import firekesti.net.nytimesmovies.R;
 import firekesti.net.nytimesmovies.StringUtils;
 import firekesti.net.nytimesmovies.models.Result;
@@ -33,6 +34,7 @@ class MovieViewHolder extends RecyclerView.ViewHolder {
     private ImageView thumbnail;
     private TextView headline;
     private TextView byline;
+    private TextView myListToggle;
 
     MovieViewHolder(View view) {
         super(view);
@@ -45,9 +47,10 @@ class MovieViewHolder extends RecyclerView.ViewHolder {
         thumbnail = view.findViewById(R.id.thumbnail);
         headline = view.findViewById(R.id.headline);
         byline = view.findViewById(R.id.byline);
+        myListToggle = view.findViewById(R.id.my_list_toggle);
     }
 
-    void bind(Result result) {
+    void bind(final Result result) {
         Context context = title.getContext();
         String divider = context.getString(R.string.text_divider);
 
@@ -127,5 +130,25 @@ class MovieViewHolder extends RecyclerView.ViewHolder {
                 }
             });
         }
+
+        boolean isInMyList = MyListStore.getInstance().isItemInMyList(result.getImdb());
+        myListToggle.setText(isInMyList ? R.string.remove_from_list : R.string.add_to_list);
+        myListToggle.setCompoundDrawablesWithIntrinsicBounds(0,
+                isInMyList ? R.drawable.remove_icon : R.drawable.add_icon, 0, 0);
+        myListToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isInMyList = MyListStore.getInstance().isItemInMyList(result.getImdb());
+                if (isInMyList) {
+                    MyListStore.getInstance().removeFromMyList(result.getImdb());
+                } else {
+                    MyListStore.getInstance().addToMyList(result.getImdb());
+                }
+                isInMyList = !isInMyList;
+                myListToggle.setText(isInMyList ? R.string.remove_from_list : R.string.add_to_list);
+                myListToggle.setCompoundDrawablesWithIntrinsicBounds(0,
+                        isInMyList ? R.drawable.remove_icon : R.drawable.add_icon, 0, 0);
+            }
+        });
     }
 }
