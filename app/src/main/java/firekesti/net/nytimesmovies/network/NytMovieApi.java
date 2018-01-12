@@ -1,6 +1,6 @@
 package firekesti.net.nytimesmovies.network;
 
-import firekesti.net.nytimesmovies.network.models.ApiResponse;
+import firekesti.net.nytimesmovies.models.ApiResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

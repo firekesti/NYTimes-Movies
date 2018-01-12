@@ -1,4 +1,4 @@
-package firekesti.net.nytimesmovies;
+package firekesti.net.nytimesmovies.view;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -14,9 +14,9 @@ import android.view.View;
 import java.util.List;
 
 import de.psdev.licensesdialog.LicensesDialog;
+import firekesti.net.nytimesmovies.R;
 import firekesti.net.nytimesmovies.network.NytMovieClient;
-import firekesti.net.nytimesmovies.network.models.Result;
-import firekesti.net.nytimesmovies.view.MoviesAdapter;
+import firekesti.net.nytimesmovies.models.Result;
 import retrofit2.Call;
 
 public class MainActivity extends AppCompatActivity implements NytMovieClient.ResultsListener {

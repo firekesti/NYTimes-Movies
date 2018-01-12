@@ -19,8 +19,8 @@ import java.util.List;
 
 import firekesti.net.nytimesmovies.R;
 import firekesti.net.nytimesmovies.StringUtils;
-import firekesti.net.nytimesmovies.network.models.Result;
-import firekesti.net.nytimesmovies.network.models.Review;
+import firekesti.net.nytimesmovies.models.Result;
+import firekesti.net.nytimesmovies.models.Review;
 
 /**
  * Adapter for the results of the movies API call
