@@ -8,6 +8,27 @@
     android:maxWidth="540dp"
     android:padding="16dp">
 
+    <ImageView
+        android:id="@+id/thumbnail"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="h,3:2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/movie_placeholder"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/black_40"
+        app:layout_constraintBottom_toBottomOf="@id/thumbnail"
+        app:layout_constraintEnd_toEndOf="@id/thumbnail"
+        app:layout_constraintStart_toStartOf="@id/thumbnail"
+        app:layout_constraintTop_toTopOf="@id/thumbnail"/>
+
     <TextView
         android:id="@+id/critic_pick"
         android:layout_width="wrap_content"
@@ -23,110 +44,96 @@
         android:textColor="@color/almost_black"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="@id/thumbnail"
+        tools:visibility="gone"/>
 
     <TextView
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/white"
         android:textSize="32sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/critic_pick"
+        app:layout_goneMarginTop="8dp"
         tools:text="Detroit"/>
-
-    <ImageView
-        android:id="@+id/thumbnail"
-        android:layout_width="200dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:contentDescription="@null"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@id/byline"
-        app:layout_constraintDimensionRatio="h,3:2"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        tools:src="@drawable/movie_placeholder"/>
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/black_40"
-        app:layout_constraintBottom_toBottomOf="@id/thumbnail"
-        app:layout_constraintEnd_toEndOf="@id/thumbnail"
-        app:layout_constraintStart_toStartOf="@id/thumbnail"
-        app:layout_constraintTop_toTopOf="@id/thumbnail"/>
 
     <TextView
         android:id="@+id/headline"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
         android:fontFamily="serif"
         android:gravity="end"
         android:textColor="@color/white"
-        app:layout_constrainedHeight="true"
-        app:layout_constraintBottom_toBottomOf="@id/thumbnail"
+        app:layout_constraintBottom_toTopOf="@+id/byline"
         app:layout_constraintEnd_toEndOf="@id/thumbnail"
-        app:layout_constraintStart_toStartOf="@id/thumbnail"
-        app:layout_constraintTop_toTopOf="@id/thumbnail"
         app:layout_constraintVertical_bias="0"
+        app:layout_constraintWidth_max="200dp"
         tools:text="Review: In ‘Detroit,’ Black Lives Caught in a Prehistory of the Alt-Right"/>
 
     <TextView
         android:id="@+id/byline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
         android:fontFamily="sans-serif-smallcaps"
-        android:padding="8dp"
         android:textColor="@color/white"
         android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/thumbnail"
         app:layout_constraintEnd_toEndOf="@id/thumbnail"
-        app:layout_constraintTop_toBottomOf="@id/headline"
         tools:text="A. O. SCOTT"/>
 
     <TextView
         android:id="@+id/my_list_toggle"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
         android:clickable="true"
         android:drawableTop="@drawable/add_icon"
         android:focusable="true"
         android:gravity="center"
         android:text="@string/add_to_list"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@id/thumbnail"
-        app:layout_constraintStart_toEndOf="@id/thumbnail"
-        app:layout_constraintTop_toTopOf="@id/thumbnail"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thumbnail"/>
 
     <TextView
         android:id="@+id/year_rating_runtime"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
+        android:maxLines="1"
+        app:layout_constraintEnd_toStartOf="@id/my_list_toggle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/thumbnail"
         tools:text="2017  |  R  |  2h 23m"/>
 
     <TextView
         android:id="@+id/genres"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textColor="@color/light_grey"
+        app:layout_constraintEnd_toStartOf="@id/my_list_toggle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/year_rating_runtime"
         tools:text="Crime, Drama, History, Thriller"/>
 
     <TextView
         android:id="@+id/director"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:maxLines="1"
         android:textColor="@color/light_grey"
+        app:layout_constraintEnd_toStartOf="@id/my_list_toggle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/genres"
         tools:text="Directed by Kathryn Bigelow"/>
@@ -138,10 +145,11 @@
         android:layout_marginTop="8dp"
         android:fontFamily="serif"
         android:lineSpacingMultiplier="1.2"
+        android:paddingBottom="16dp"
         android:textColor="@color/almost_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/director"
+        app:layout_constraintTop_toBottomOf="@id/my_list_toggle"
         tools:text="Kathryn Bigelow’s new movie, set amid the Detroit riots of 1967, grapples with the legacy of American racism."/>
 
 </android.support.constraint.ConstraintLayout>
