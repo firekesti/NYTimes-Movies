@@ -14,11 +14,23 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:textColor="@color/black"
-        android:textSize="32sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@+id/my_list_toggle"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Detroit"/>
+        app:layout_constraintWidth_max="320dp"
+        tools:text="Detroit or a really long title"/>
+
+    <TextView
+        android:id="@+id/year_rating_runtime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:maxLines="1"
+        app:layout_constraintStart_toStartOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        tools:text="2017  |  R  |  2h 23m"/>
 
     <!-- TODO: tap to view on IMDb, NYT? -->
 
@@ -27,11 +39,13 @@
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:drawableTop="@drawable/add_icon"
+        android:drawableTop="@drawable/remove_icon"
         android:focusable="true"
         android:gravity="center"
-        android:text="@string/add_to_list"
+        android:text="@string/remove_from_list"
         android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/title"
         app:layout_constraintTop_toTopOf="parent"/>
 </android.support.constraint.ConstraintLayout>

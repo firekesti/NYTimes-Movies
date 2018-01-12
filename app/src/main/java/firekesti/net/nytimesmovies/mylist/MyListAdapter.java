@@ -39,15 +39,27 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
+        TextView yearRatingRuntime;
+        TextView myListToggle;
 
         ViewHolder(View view) {
             super(view);
             title = view.findViewById(R.id.title);
+            yearRatingRuntime = view.findViewById(R.id.year_rating_runtime);
+            myListToggle = view.findViewById(R.id.my_list_toggle);
         }
 
 
-        void bind(Movie movie) {
+        void bind(final Movie movie) {
             title.setText(movie.getTitle());
+            yearRatingRuntime.setText(movie.getYearRatingRuntime());
+
+            myListToggle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MyListStore.getInstance().removeFromMyList(movie);
+                }
+            });
         }
     }
 }
