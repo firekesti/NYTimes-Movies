@@ -1,4 +1,4 @@
-package firekesti.net.nytimesmovies.view;
+package firekesti.net.nytimesmovies.movies;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -13,7 +13,7 @@ import android.widget.ProgressBar;
 import java.util.List;
 
 import firekesti.net.nytimesmovies.R;
-import firekesti.net.nytimesmovies.models.Result;
+import firekesti.net.nytimesmovies.network.models.Result;
 import firekesti.net.nytimesmovies.network.NytMovieStore;
 import retrofit2.Call;
 

@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import firekesti.net.nytimesmovies.R;
+import firekesti.net.nytimesmovies.movies.LatestPicksFragment;
+import firekesti.net.nytimesmovies.mylist.MyListFragment;
 
 /**
  * A PagerAdapter to switch between the main views of the app

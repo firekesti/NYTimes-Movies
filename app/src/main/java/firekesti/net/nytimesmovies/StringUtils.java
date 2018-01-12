@@ -3,9 +3,8 @@ package firekesti.net.nytimesmovies;
 import java.util.Locale;
 
 /**
- * Created by kkelly on 1/9/18.
+ * A Utils class to manipulate strings
  */
-
 public final class StringUtils {
     /**
      * Format string used for long time expressions which include hours: 1h 23m

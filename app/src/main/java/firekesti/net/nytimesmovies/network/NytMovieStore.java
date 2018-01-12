@@ -4,8 +4,8 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import firekesti.net.nytimesmovies.models.ApiResponse;
-import firekesti.net.nytimesmovies.models.Result;
+import firekesti.net.nytimesmovies.network.models.ApiResponse;
+import firekesti.net.nytimesmovies.network.models.Result;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

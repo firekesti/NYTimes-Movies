@@ -1,4 +1,4 @@
-package firekesti.net.nytimesmovies.view;
+package firekesti.net.nytimesmovies.mylist;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +9,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import firekesti.net.nytimesmovies.MyListStore;
 import firekesti.net.nytimesmovies.R;
 
 /**

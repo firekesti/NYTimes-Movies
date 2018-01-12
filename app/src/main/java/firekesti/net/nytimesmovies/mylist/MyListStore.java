@@ -1,4 +1,4 @@
-package firekesti.net.nytimesmovies;
+package firekesti.net.nytimesmovies.mylist;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -25,7 +25,7 @@ public class MyListStore {
         titles = context.getSharedPreferences(FILE_NAME_TITLES, Context.MODE_PRIVATE);
     }
 
-    static void init(Context context) {
+    public static void init(Context context) {
         instance = new MyListStore(context);
     }
 
@@ -47,11 +47,11 @@ public class MyListStore {
         titles.edit().remove(id).apply();
     }
 
-    public Set<String> getAllIds() {
+    Set<String> getAllIds() {
         return ids.getAll().keySet();
     }
 
-    public String getTitleForId(String id) {
+    String getTitleForId(String id) {
         return titles.getString(id, null);
     }
 }

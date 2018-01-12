@@ -2,6 +2,8 @@ package firekesti.net.nytimesmovies;
 
 import android.app.Application;
 
+import firekesti.net.nytimesmovies.mylist.MyListStore;
+
 /**
  * Allow instantiation of singletons in the Application onCreate
  */

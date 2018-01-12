@@ -1,4 +1,4 @@
-package firekesti.net.nytimesmovies.view;
+package firekesti.net.nytimesmovies.movies;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import firekesti.net.nytimesmovies.R;
-import firekesti.net.nytimesmovies.models.Result;
+import firekesti.net.nytimesmovies.network.models.Result;
 
 /**
  * Adapter for the results of the movies API call

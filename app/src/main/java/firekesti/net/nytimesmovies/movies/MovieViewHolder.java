@@ -1,4 +1,4 @@
-package firekesti.net.nytimesmovies.view;
+package firekesti.net.nytimesmovies.movies;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -15,11 +15,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import firekesti.net.nytimesmovies.MyListStore;
+import firekesti.net.nytimesmovies.mylist.MyListStore;
 import firekesti.net.nytimesmovies.R;
 import firekesti.net.nytimesmovies.StringUtils;
-import firekesti.net.nytimesmovies.models.Result;
-import firekesti.net.nytimesmovies.models.Review;
+import firekesti.net.nytimesmovies.network.models.Result;
+import firekesti.net.nytimesmovies.network.models.Review;
 
 /**
  * A ViewHolder for the Movie item that holds the binding logic

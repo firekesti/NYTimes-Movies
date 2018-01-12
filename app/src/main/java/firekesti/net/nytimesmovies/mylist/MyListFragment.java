@@ -1,4 +1,4 @@
-package firekesti.net.nytimesmovies.view;
+package firekesti.net.nytimesmovies.mylist;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
