@@ -1,4 +1,4 @@
-package firekesti.net.nytimesmovies.models;
+package firekesti.net.nytimesmovies.network.models;
 
 import com.squareup.moshi.Json;
 
