@@ -15,11 +15,11 @@ import java.util.List;
 
 import de.psdev.licensesdialog.LicensesDialog;
 import firekesti.net.nytimesmovies.R;
-import firekesti.net.nytimesmovies.network.NytMovieClient;
+import firekesti.net.nytimesmovies.network.NytMovieStore;
 import firekesti.net.nytimesmovies.models.Result;
 import retrofit2.Call;
 
-public class MainActivity extends AppCompatActivity implements NytMovieClient.ResultsListener {
+public class MainActivity extends AppCompatActivity implements NytMovieStore.ResultsListener {
     private Call call;
     private RecyclerView moviesList;
     private View loadingSpinner;
@@ -33,6 +33,11 @@ public class MainActivity extends AppCompatActivity implements NytMovieClient.Re
         moviesList = findViewById(R.id.movies_list);
         moviesList.setLayoutManager(new LinearLayoutManager(this));
         loadingSpinner = findViewById(R.id.loading_spinner);
+
+        // Start the app by loading in the latest picks
+        cancelCall();
+        loadingSpinner.setVisibility(View.VISIBLE);
+        call = NytMovieStore.getLatestPicks(MainActivity.this);
     }
 
     @Override
@@ -90,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements NytMovieClient.Re
     private void makeCall(String query) {
         cancelCall();
         loadingSpinner.setVisibility(View.VISIBLE);
-        call = NytMovieClient.getMovies(query, MainActivity.this);
+        call = NytMovieStore.getMovies(query, MainActivity.this);
     }
 
     private void cancelCall() {

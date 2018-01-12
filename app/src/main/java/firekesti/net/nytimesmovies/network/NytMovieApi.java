@@ -13,4 +13,9 @@ public interface NytMovieApi {
     Call<ApiResponse> getMovies(
             @Query("query") String query,
             @Query("api-key") String apiKey);
+
+    @GET("/svc/movies/v3/movies.json")
+    Call<ApiResponse> getLatestPicks(
+            @Query("pick") String pick,
+            @Query("api-key") String apiKey);
 }

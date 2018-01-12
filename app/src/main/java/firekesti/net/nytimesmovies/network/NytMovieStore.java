@@ -15,11 +15,11 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 /**
  *
  */
-public final class NytMovieClient {
+public final class NytMovieStore {
     private static final String API_BASE_URL = "http://content.api.nytimes.com";
     private static final String API_KEY = "9a8930af832f4fe281998d2181613d5c";
 
-    private NytMovieClient() {
+    private NytMovieStore() {
     }
 
     public static Call<ApiResponse> getMovies(String query, final ResultsListener listener) {
@@ -29,6 +29,31 @@ public final class NytMovieClient {
                 .build()
                 .create(NytMovieApi.class)
                 .getMovies(query, API_KEY);
+        call.enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
+                if (response.isSuccessful()) {
+                    listener.onResults(response.body().getResults());
+                } else {
+                    listener.onFailure();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
+                listener.onFailure();
+            }
+        });
+        return call;
+    }
+
+    public static Call<ApiResponse> getLatestPicks(final ResultsListener listener) {
+        Call<ApiResponse> call = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(MoshiConverterFactory.create())
+                .build()
+                .create(NytMovieApi.class)
+                .getLatestPicks("y", API_KEY);
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(@NonNull Call<ApiResponse> call, @NonNull Response<ApiResponse> response) {
