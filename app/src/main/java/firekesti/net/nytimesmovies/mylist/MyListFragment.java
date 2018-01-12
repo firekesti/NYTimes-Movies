@@ -20,6 +20,7 @@ import firekesti.net.nytimesmovies.database.Movie;
  * A Fragment for the "My List" screen
  */
 public class MyListFragment extends Fragment {
+    private MyListAdapter adapter;
 
     public static MyListFragment newInstance() {
         MyListFragment fragment = new MyListFragment();
@@ -33,12 +34,14 @@ public class MyListFragment extends Fragment {
         View view = inflater.inflate(R.layout.my_list, container, false);
         final RecyclerView myList = view.findViewById(R.id.my_list);
         myList.setLayoutManager(new LinearLayoutManager(container.getContext()));
+        adapter = new MyListAdapter();
+        myList.setAdapter(adapter);
 
         LiveData<List<Movie>> movies = MyListStore.getInstance().getMyList();
         movies.observe(this, new Observer<List<Movie>>() {
             @Override
             public void onChanged(@Nullable List<Movie> movies) {
-                myList.setAdapter(new MyListAdapter(movies));
+                adapter.setMovies(movies);
             }
         });
         return view;

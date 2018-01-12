@@ -1,11 +1,13 @@
 package firekesti.net.nytimesmovies.mylist;
 
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import firekesti.net.nytimesmovies.R;
@@ -15,10 +17,40 @@ import firekesti.net.nytimesmovies.database.Movie;
  * An adapter for a My List view
  */
 public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder> {
-    private List<Movie> movies;
+    private List<Movie> movies = new ArrayList<>();
 
-    MyListAdapter(List<Movie> movies) {
-        this.movies = movies;
+    void setMovies(final List<Movie> newMovies) {
+        if (movies.isEmpty()) {
+            movies = newMovies;
+            notifyItemRangeInserted(0, newMovies.size());
+        } else {
+            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+                @Override
+                public int getOldListSize() {
+                    return movies.size();
+                }
+
+                @Override
+                public int getNewListSize() {
+                    return newMovies.size();
+                }
+
+                @Override
+                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                    return movies.get(oldItemPosition).getId().equals(
+                            newMovies.get(newItemPosition).getId());
+                }
+
+                @Override
+                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                    Movie newMovie = newMovies.get(newItemPosition);
+                    Movie oldMovie = movies.get(oldItemPosition);
+                    return newMovie.getId().equals(oldMovie.getId());
+                }
+            });
+            movies = newMovies;
+            result.dispatchUpdatesTo(this);
+        }
     }
 
     @Override
