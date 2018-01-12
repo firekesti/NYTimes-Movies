@@ -120,7 +120,8 @@ class MovieViewHolder extends RecyclerView.ViewHolder {
         }
 
         boolean isInMyList = MyListStore.getInstance().isItemInMyList(result.getImdb());
-        myListToggle.setText(isInMyList ? R.string.remove_from_list : R.string.add_to_list);
+        myListToggle.setContentDescription(context.getString(
+                isInMyList ? R.string.desc_remove_from_list : R.string.desc_add_to_list));
         myListToggle.setCompoundDrawablesWithIntrinsicBounds(0,
                 isInMyList ? R.drawable.remove_icon : R.drawable.add_icon, 0, 0);
         myListToggle.setOnClickListener(new View.OnClickListener() {
@@ -133,7 +134,8 @@ class MovieViewHolder extends RecyclerView.ViewHolder {
                     MyListStore.getInstance().addToMyList(result, context);
                 }
                 isInMyList = !isInMyList;
-                myListToggle.setText(isInMyList ? R.string.remove_from_list : R.string.add_to_list);
+                myListToggle.setContentDescription(context.getString(
+                        isInMyList ? R.string.desc_remove_from_list : R.string.desc_add_to_list));
                 myListToggle.setCompoundDrawablesWithIntrinsicBounds(0,
                         isInMyList ? R.drawable.remove_icon : R.drawable.add_icon, 0, 0);
             }

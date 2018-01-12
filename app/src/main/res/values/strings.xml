@@ -7,8 +7,9 @@
     <string name="desc_nyt_data">Data provided by The New York Times</string>
     <string name="search">Search</string>
     <string name="search_movie_reviews">Search movie reviews</string>
-    <string name="add_to_list">Add to\nMy List</string>
-    <string name="remove_from_list">Remove from\nMy List</string>
+    <string name="desc_add_to_list">Add to My List</string>
+    <string name="desc_remove_from_list">Remove from My List</string>
+    <string name="remove">Remove</string>
     <string name="latest_picks">Latest Picks</string>
     <string name="my_list">My List</string>
 </resources>
