@@ -3,21 +3,26 @@ package firekesti.net.nytimesmovies;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.Set;
+
 /**
  * A store using SharedPreferences to save a list of movie IDs for the user
  */
 public class MyListStore {
     // Name of the file where we store all preferences
     private static final String FILE_NAME = "mylist";
+    private static final String FILE_NAME_TITLES = "mylist.titles";
 
     // Singleton instance of this class
     private static MyListStore instance;
 
     // Shared preferences instance
-    private final SharedPreferences prefs;
+    private final SharedPreferences ids;
+    private final SharedPreferences titles;
 
     private MyListStore(Context context) {
-        prefs = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        ids = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        titles = context.getSharedPreferences(FILE_NAME_TITLES, Context.MODE_PRIVATE);
     }
 
     static void init(Context context) {
@@ -28,19 +33,25 @@ public class MyListStore {
         return instance;
     }
 
-    public int getMyListSize() {
-        return prefs.getAll().size();
+    public boolean isItemInMyList(String id) {
+        return ids.getBoolean(id, false);
     }
 
-    public boolean isItemInMyList(String contentItemId) {
-        return prefs.getBoolean(contentItemId, false);
+    public void addToMyList(String id, String title) {
+        ids.edit().putBoolean(id, true).apply();
+        titles.edit().putString(id, title).apply();
     }
 
-    public void addToMyList(String contentId) {
-        prefs.edit().putBoolean(contentId, true).apply();
+    public void removeFromMyList(String id) {
+        ids.edit().remove(id).apply();
+        titles.edit().remove(id).apply();
     }
 
-    public void removeFromMyList(String contentId) {
-        prefs.edit().remove(contentId).apply();
+    public Set<String> getAllIds() {
+        return ids.getAll().keySet();
+    }
+
+    public String getTitleForId(String id) {
+        return titles.getString(id, null);
     }
 }

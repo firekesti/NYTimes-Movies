@@ -1,28 +1,18 @@
 package firekesti.net.nytimesmovies.view;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-
-import java.util.List;
 
 import de.psdev.licensesdialog.LicensesDialog;
 import firekesti.net.nytimesmovies.R;
-import firekesti.net.nytimesmovies.network.NytMovieStore;
-import firekesti.net.nytimesmovies.models.Result;
-import retrofit2.Call;
 
-public class MainActivity extends AppCompatActivity implements NytMovieStore.ResultsListener {
-    private Call call;
-    private RecyclerView moviesList;
-    private View loadingSpinner;
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,32 +20,11 @@ public class MainActivity extends AppCompatActivity implements NytMovieStore.Res
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        moviesList = findViewById(R.id.movies_list);
-        moviesList.setLayoutManager(new LinearLayoutManager(this));
-        loadingSpinner = findViewById(R.id.loading_spinner);
 
-        // Start the app by loading in the latest picks
-        cancelCall();
-        loadingSpinner.setVisibility(View.VISIBLE);
-        call = NytMovieStore.getLatestPicks(MainActivity.this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        cancelCall();
-    }
-
-    @Override
-    public void onResults(List<Result> results) {
-        loadingSpinner.setVisibility(View.GONE);
-        moviesList.setAdapter(new MoviesAdapter(results));
-    }
-
-    @Override
-    public void onFailure() {
-        loadingSpinner.setVisibility(View.GONE);
-        Snackbar.make(findViewById(android.R.id.content), "There was an error getting movies", Snackbar.LENGTH_SHORT).show();
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        viewPager.setAdapter(new NytPagerAdapter(this, getSupportFragmentManager()));
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override
@@ -63,12 +32,13 @@ public class MainActivity extends AppCompatActivity implements NytMovieStore.Res
         getMenuInflater().inflate(R.menu.menu_main, menu);
         final MenuItem searchMenuItem = menu.findItem(R.id.search);
         final SearchView searchView = (SearchView) searchMenuItem.getActionView();
-        searchView.setIconifiedByDefault(false);
         searchView.setQueryHint(getString(R.string.search_movie_reviews));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                makeCall(query);
+//                cancelCall();
+//                loadingSpinner.setVisibility(View.VISIBLE);
+//                call = NytMovieStore.getMovies(query, MainActivity.this);
                 return false;
             }
 
@@ -90,19 +60,5 @@ public class MainActivity extends AppCompatActivity implements NytMovieStore.Res
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void makeCall(String query) {
-        cancelCall();
-        loadingSpinner.setVisibility(View.VISIBLE);
-        call = NytMovieStore.getMovies(query, MainActivity.this);
-    }
-
-    private void cancelCall() {
-        // Make sure not to leak the Activity over a long network call
-        if (call != null && !call.isCanceled()) {
-            call.cancel();
-        }
-        moviesList.setAdapter(null);
     }
 }

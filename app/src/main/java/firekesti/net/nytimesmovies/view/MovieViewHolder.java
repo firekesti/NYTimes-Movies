@@ -142,7 +142,7 @@ class MovieViewHolder extends RecyclerView.ViewHolder {
                 if (isInMyList) {
                     MyListStore.getInstance().removeFromMyList(result.getImdb());
                 } else {
-                    MyListStore.getInstance().addToMyList(result.getImdb());
+                    MyListStore.getInstance().addToMyList(result.getImdb(), result.getTitle());
                 }
                 isInMyList = !isInMyList;
                 myListToggle.setText(isInMyList ? R.string.remove_from_list : R.string.add_to_list);

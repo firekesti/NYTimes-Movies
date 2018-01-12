@@ -9,4 +9,6 @@
     <string name="search_movie_reviews">Search movie reviews</string>
     <string name="add_to_list">Add to\nMy List</string>
     <string name="remove_from_list">Remove from\nMy List</string>
+    <string name="latest_picks">Latest Picks</string>
+    <string name="my_list">My List</string>
 </resources>
