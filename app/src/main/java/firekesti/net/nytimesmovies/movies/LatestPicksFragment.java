@@ -57,6 +57,7 @@ public class LatestPicksFragment extends Fragment implements NytMovieStore.Resul
         if (call != null && !call.isCanceled()) {
             call.cancel();
         }
+        // Make sure to unbind all views to remove LiveData observers in the ViewHolders
         moviesList.setAdapter(null);
     }
 

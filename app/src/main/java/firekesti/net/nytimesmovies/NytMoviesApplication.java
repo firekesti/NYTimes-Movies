@@ -5,6 +5,7 @@ import android.app.Application;
 import com.squareup.leakcanary.LeakCanary;
 
 import firekesti.net.nytimesmovies.mylist.MyListStore;
+import timber.log.Timber;
 
 /**
  * Allow instantiation of singletons in the Application onCreate
@@ -20,5 +21,8 @@ public class NytMoviesApplication extends Application {
         }
         LeakCanary.install(this);
         MyListStore.init(this);
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
     }
 }
