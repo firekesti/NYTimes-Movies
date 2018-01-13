@@ -25,4 +25,7 @@ public interface MovieDao {
 
     @Query("SELECT * FROM movie WHERE id LIKE :id LIMIT 1")
     Movie findById(String id);
+
+    @Query("SELECT * FROM movie WHERE id LIKE :id LIMIT 1")
+    LiveData<Movie> findByIdObservable(String id);
 }

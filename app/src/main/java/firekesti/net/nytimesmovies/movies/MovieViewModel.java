@@ -11,7 +11,6 @@ import java.util.List;
 
 import firekesti.net.nytimesmovies.R;
 import firekesti.net.nytimesmovies.StringUtils;
-import firekesti.net.nytimesmovies.mylist.MyListStore;
 import firekesti.net.nytimesmovies.network.models.Result;
 
 /**
@@ -89,32 +88,6 @@ class MovieViewModel {
                     v.getContext().startActivity(intent);
                 } catch (ActivityNotFoundException e) {
                     Log.e("MytMovies", "Couldn't open review URL", e);
-                }
-            }
-        };
-    }
-
-    private boolean isInMyList() {
-        return MyListStore.getInstance().isItemInMyList(result.getImdb());
-    }
-
-    String getMyListContentDescription(Context context) {
-        return context.getString(isInMyList() ? R.string.desc_remove_from_list : R.string.desc_add_to_list);
-    }
-
-    int getMyListDrawable() {
-        return isInMyList() ? R.drawable.remove_icon : R.drawable.add_icon;
-    }
-
-    View.OnClickListener getMyListClickListener() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: UI isn't updated, no LiveData hookup
-                if (isInMyList()) {
-                    MyListStore.getInstance().removeFromMyList(result.getImdb());
-                } else {
-                    MyListStore.getInstance().addToMyList(result, v.getContext());
                 }
             }
         };

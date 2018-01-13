@@ -1,6 +1,8 @@
 package firekesti.net.nytimesmovies.movies;
 
+import android.arch.lifecycle.Observer;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,8 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import firekesti.net.nytimesmovies.R;
+import firekesti.net.nytimesmovies.database.Movie;
+import firekesti.net.nytimesmovies.mylist.MyListViewModel;
 import firekesti.net.nytimesmovies.network.models.Result;
 
 /**
@@ -33,7 +37,13 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.bind(new MovieViewModel(results.get(position)));
+        holder.bind(results.get(position));
+    }
+
+    @Override
+    public void onViewRecycled(ViewHolder holder) {
+        super.onViewRecycled(holder);
+        holder.unBind();
     }
 
     @Override
@@ -55,6 +65,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         private TextView headline;
         private TextView byline;
         private TextView myListToggle;
+        private MyListViewModel myListViewModel;
 
         ViewHolder(View view) {
             super(view);
@@ -70,7 +81,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
             myListToggle = view.findViewById(R.id.my_list_toggle);
         }
 
-        void bind(final MovieViewModel viewModel) {
+        void bind(final Result result) {
+            MovieViewModel viewModel = new MovieViewModel(result);
             Context context = title.getContext();
             criticPick.setVisibility(viewModel.getCriticPickVisibility());
             title.setText(viewModel.getTitle());
@@ -87,10 +99,24 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
             byline.setText(viewModel.getByline());
             thumbnail.setOnClickListener(viewModel.getThumbnailClickListener());
 
-            myListToggle.setContentDescription(viewModel.getMyListContentDescription(context));
+            // Bind My List
+            myListViewModel = new MyListViewModel(result, new Observer<Movie>() {
+                @Override
+                public void onChanged(@Nullable Movie movie) {
+                    bindMyList(result);
+                }
+            });
+        }
+
+        void bindMyList(Result result) {
+            myListToggle.setContentDescription(myListViewModel.getMyListContentDescription(myListToggle.getContext()));
             myListToggle.setCompoundDrawablesWithIntrinsicBounds(0,
-                    viewModel.getMyListDrawable(), 0, 0);
-            myListToggle.setOnClickListener(viewModel.getMyListClickListener());
+                    myListViewModel.getMyListDrawable(), 0, 0);
+            myListToggle.setOnClickListener(myListViewModel.getMyListClickListener(result));
+        }
+
+        void unBind() {
+            myListViewModel.stopObserving();
         }
     }
 }

@@ -36,11 +36,6 @@ public class MyListStore {
         return instance;
     }
 
-    public boolean isItemInMyList(String id) {
-        Movie movie = db.movieDao().findById(id);
-        return movie != null;
-    }
-
     public void addToMyList(Result result, Context context) {
         Movie movie = new Movie();
         movie.setId(result.getImdb());
@@ -59,5 +54,9 @@ public class MyListStore {
 
     public LiveData<List<Movie>> getMyList() {
         return db.movieDao().getAll();
+    }
+
+    public LiveData<Movie> getMyListItemForId(String id) {
+        return db.movieDao().findByIdObservable(id);
     }
 }
