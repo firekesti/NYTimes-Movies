@@ -57,7 +57,7 @@ public class MyListStore {
         db.movieDao().remove(movie);
     }
 
-    LiveData<List<Movie>> getMyList() {
+    public LiveData<List<Movie>> getMyList() {
         return db.movieDao().getAll();
     }
 }

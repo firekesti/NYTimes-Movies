@@ -13,8 +13,8 @@ import android.widget.ProgressBar;
 import java.util.List;
 
 import firekesti.net.nytimesmovies.R;
-import firekesti.net.nytimesmovies.network.models.Result;
 import firekesti.net.nytimesmovies.network.NytMovieStore;
+import firekesti.net.nytimesmovies.network.models.Result;
 import retrofit2.Call;
 
 /**
@@ -59,7 +59,6 @@ public class LatestPicksFragment extends Fragment implements NytMovieStore.Resul
         }
         moviesList.setAdapter(null);
     }
-
 
     @Override
     public void onResults(List<Result> results) {
