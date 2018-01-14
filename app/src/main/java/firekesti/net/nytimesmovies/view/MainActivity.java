@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +12,8 @@ import de.psdev.licensesdialog.LicensesDialog;
 import firekesti.net.nytimesmovies.R;
 
 public class MainActivity extends AppCompatActivity {
+    private ViewPager viewPager;
+    private MenuItem searchMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,31 +21,50 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        ViewPager viewPager = findViewById(R.id.view_pager);
+        viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(new NytPagerAdapter(this, getSupportFragmentManager()));
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
+        viewPager.setOffscreenPageLimit(2);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                // If the user scrolls away from the Search tab, collapse the search action view
+                if (position != NytPagerAdapter.SEARCH_ITEM_POSITION && searchMenuItem != null) {
+                    searchMenuItem.collapseActionView();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        final MenuItem searchMenuItem = menu.findItem(R.id.search);
-        final SearchView searchView = (SearchView) searchMenuItem.getActionView();
-        searchView.setQueryHint(getString(R.string.search_movie_reviews));
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchMenuItem = menu.findItem(R.id.search);
+        searchMenuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-//                cancelCall();
-//                loadingSpinner.setVisibility(View.VISIBLE);
-//                call = NytMovieStore.getMovies(query, MainActivity.this);
-                return false;
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                // Scroll to the search fragment when tapped
+                viewPager.setCurrentItem(NytPagerAdapter.SEARCH_ITEM_POSITION, true);
+                return true;
             }
 
             @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                return true;
             }
         });
         return true;
